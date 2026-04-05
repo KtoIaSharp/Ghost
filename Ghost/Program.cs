@@ -17,6 +17,10 @@ string? ConvertPostgresUrlToConnectionString(string? postgresUrl)
     if (postgresUrl.StartsWith("Host=", StringComparison.OrdinalIgnoreCase))
         return postgresUrl;
     
+    // Render может давать postgresql:// — меняем на postgres://
+    if (postgresUrl.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
+        postgresUrl = "postgres://" + postgresUrl[13..];
+    
     // Формат: postgres://user:password@host:port/dbname
     try
     {
