@@ -901,6 +901,10 @@
         <button class="nav-item active" onclick="switchPanel('dashboard', this)">
             <span class="icon">📊</span> Дашборд
         </button>
+        <button class="nav-item" onclick="switchPanel('online', this)">
+            <span class="icon">🟢</span> Онлайн
+            <span class="badge" id="onlineBadge" style="display:none">0</span>
+        </button>
         <button class="nav-item" onclick="switchPanel('users', this)">
             <span class="icon">👥</span> Пользователи
         </button>
@@ -944,14 +948,14 @@
                     <div class="stat-label">Пользователей</div>
                 </div>
                 <div class="stat-card green">
+                    <div class="stat-icon">🟢</div>
+                    <div class="stat-value" id="statOnline">—</div>
+                    <div class="stat-label">Онлайн сейчас</div>
+                </div>
+                <div class="stat-card cyan">
                     <div class="stat-icon">📋</div>
                     <div class="stat-value" id="statTasks">—</div>
                     <div class="stat-label">Заданий</div>
-                </div>
-                <div class="stat-card cyan">
-                    <div class="stat-icon">💼</div>
-                    <div class="stat-value" id="statDeals">—</div>
-                    <div class="stat-label">Сделок</div>
                 </div>
                 <div class="stat-card yellow">
                     <div class="stat-icon">⚠️</div>
@@ -963,6 +967,32 @@
             <button class="refresh-btn" onclick="refreshAll()">
                 <span class="icon">🔄</span> Обновить данные
             </button>
+        </div>
+
+        <!-- ===== ONLINE ===== -->
+        <div class="panel" id="onlinePanel">
+            <div class="page-header">
+                <h1>🟢 Пользователи онлайн</h1>
+                <p>Активны в последние 5 минут</p>
+            </div>
+
+            <div class="table-card">
+                <div class="table-header">
+                    <div style="display:flex;align-items:center;gap:15px;">
+                        <h3>Сейчас в сети</h3>
+                        <span class="count" id="onlineCount">0</span>
+                    </div>
+                    <input type="text" class="search-box" placeholder="🔍 Поиск по нику..." oninput="filterOnline(this.value)">
+                </div>
+                <div class="table-wrap">
+                    <div id="onlineTable">
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p style="color:var(--text-secondary)">Загрузка...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ===== USERS ===== -->
@@ -1203,27 +1233,102 @@
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('appLayout').style.display = 'flex';
         refreshAll();
+        // Автообновление онлайн каждые 30 сек
+        setInterval(loadOnline, 30000);
+        setInterval(loadStats, 30000);
     }
 
     // ===== LOAD DATA =====
     async function refreshAll() {
-        await Promise.all([loadUsers(), loadTasks(), loadComplaints(), loadStats()]);
+        await Promise.all([loadUsers(), loadTasks(), loadComplaints(), loadOnline(), loadStats()]);
         showToast('Данные обновлены', 'success');
+    }
+
+    // ===== ONLINE USERS =====
+    let onlineUsers = [];
+
+    async function loadOnline() {
+        try {
+            const res = await fetch(`${API_URL}/api/Admin/online`, { headers: authHeaders() });
+            if (!res.ok) return;
+            onlineUsers = await res.json();
+            document.getElementById('onlineCount').textContent = onlineUsers.length;
+            renderOnline(onlineUsers);
+        } catch (e) { /* silent */ }
+    }
+
+    function renderOnline(users) {
+        if (users.length === 0) {
+            document.getElementById('onlineTable').innerHTML = `
+                <div class="empty-state">
+                    <span class="emoji">😴</span>
+                    <h3>Никого нет онлайн</h3>
+                    <p>Пользователи появятся здесь когда зайдут в приложение</p>
+                </div>`;
+            return;
+        }
+
+        document.getElementById('onlineTable').innerHTML = `
+            <table>
+                <thead>
+                    <tr><th></th><th>ID</th><th>Ник</th><th>Хеш фразы</th><th>Рейтинг</th><th>Заданий выполнено</th><th>Админ</th><th>Последняя активность</th></tr>
+                </thead>
+                <tbody>
+                    ${users.map(u => `
+                        <tr>
+                            <td><div class="status-dot" style="width:10px;height:10px;flex-shrink:0"></div></td>
+                            <td>${u.id}</td>
+                            <td><strong>${u.currentNick}</strong></td>
+                            <td><span class="hash">${u.phraseHash.substring(0, 18)}…</span></td>
+                            <td>${u.rating.toFixed(1)}</td>
+                            <td>${u.completedTasks}</td>
+                            <td><span class="badge-status ${u.isAdmin ? 'badge-admin' : ''}">${u.isAdmin ? '👑 Да' : 'Нет'}</span></td>
+                            <td style="color:var(--text-secondary)">${formatTimeAgo(u.lastSeen)}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>`;
+    }
+
+    function filterOnline(query) {
+        const q = query.toLowerCase();
+        const filtered = onlineUsers.filter(u => u.currentNick.toLowerCase().includes(q));
+        renderOnline(filtered);
+    }
+
+    function formatTimeAgo(dateStr) {
+        if (!dateStr) return '—';
+        const date = new Date(dateStr + 'Z');
+        const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+        if (diff < 60) return `${diff} сек назад`;
+        if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
+        return `${Math.floor(diff / 3600)} ч назад`;
     }
 
     async function loadStats() {
         try {
-            const [usersRes, tasksRes] = await Promise.all([
+            const [usersRes, tasksRes, onlineRes] = await Promise.all([
                 fetch(`${API_URL}/api/Admin/users`, { headers: authHeaders() }),
-                fetch(`${API_URL}/api/Admin/tasks`, { headers: authHeaders() })
+                fetch(`${API_URL}/api/Admin/tasks`, { headers: authHeaders() }),
+                fetch(`${API_URL}/api/Admin/online`, { headers: authHeaders() })
             ]);
 
             const users = usersRes.ok ? await usersRes.json() : [];
             const tasks = tasksRes.ok ? await tasksRes.json() : [];
+            const online = onlineRes.ok ? await onlineRes.json() : [];
 
             document.getElementById('statUsers').textContent = users.length;
+            document.getElementById('statOnline').textContent = online.length;
             document.getElementById('statTasks').textContent = tasks.length;
-            document.getElementById('statDeals').textContent = '—';
+
+            // Online badge
+            const badge = document.getElementById('onlineBadge');
+            if (online.length > 0) {
+                badge.style.display = 'inline';
+                badge.textContent = online.length;
+            } else {
+                badge.style.display = 'none';
+            }
         } catch (e) { /* silent */ }
     }
 

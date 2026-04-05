@@ -47,9 +47,31 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// База данных (SQLite)
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+// База данных — автовыбор: PostgreSQL для продакшена, SQLite для разработки
+var dbProvider = builder.Configuration["Db:Provider"] ?? "sqlite";
+
+if (dbProvider == "postgres")
+{
+    var connStr = builder.Configuration.GetConnectionString("Postgres") 
+                  ?? builder.Environment.GetEnvironmentVariable("DATABASE_URL");
+    
+    if (string.IsNullOrEmpty(connStr))
+    {
+        throw new Exception("DATABASE_URL не настроен для PostgreSQL");
+    }
+    
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseNpgsql(connStr));
+    
+    Console.WriteLine("📦 База данных: PostgreSQL");
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+    Console.WriteLine("📦 База данных: SQLite");
+}
 
 // JWT аутентификация
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -102,9 +124,20 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // Эта команда создаст БД и все таблицы, ТОЛЬКО если файла не существует
-    dbContext.Database.EnsureCreated();
-    Console.WriteLine("База данных проверена/создана.");
+    
+    if (dbProvider == "postgres")
+    {
+        // PostgreSQL — используем миграции
+        Console.WriteLine("🔄 Применяем миграции PostgreSQL...");
+        dbContext.Database.Migrate();
+        Console.WriteLine("✅ Миграции применены.");
+    }
+    else
+    {
+        // SQLite — создаём если нет
+        dbContext.Database.EnsureCreated();
+        Console.WriteLine("✅ База данных SQLite проверена/создана.");
+    }
 }
 
 app.Run();

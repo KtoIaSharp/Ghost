@@ -37,7 +37,17 @@ public class AdminService
     {
         return await _db.Users.ToListAsync();
     }
-    
+
+    public async Task<List<User>> GetOnlineUsersAsync()
+    {
+        // Считаем онлайн если пользователь был активен последние 5 минут
+        var fiveMinutesAgo = DateTime.UtcNow.AddMinutes(-5);
+        return await _db.Users
+            .Where(u => u.LastSeen != null && u.LastSeen >= fiveMinutesAgo)
+            .OrderByDescending(u => u.LastSeen)
+            .ToListAsync();
+    }
+
     public async Task<List<SchoolTask>> GetAllTasksAsync()
     {
         return await _db.Tasks.ToListAsync();

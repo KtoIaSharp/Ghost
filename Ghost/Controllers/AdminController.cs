@@ -35,6 +35,15 @@ public class AdminController : ControllerBase
         return Ok(users);
     }
 
+    [HttpGet("online")]
+    public async Task<IActionResult> GetOnlineUsers()
+    {
+        if (!IsAdmin()) return Unauthorized();
+
+        var users = await _adminService.GetOnlineUsersAsync();
+        return Ok(users);
+    }
+
     [HttpGet("tasks")]
     public async Task<IActionResult> GetAllTasks()
     {

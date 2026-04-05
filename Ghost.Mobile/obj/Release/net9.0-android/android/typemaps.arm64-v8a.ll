@@ -319,7 +319,7 @@ target triple = "aarch64-unknown-linux-android21"
 		ptr null; uint8_t* java_map
 	}, ; 25
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xce, i8 u0x36, i8 u0x4a, i8 u0x0f, i8 u0xf9, i8 u0x74, i8 u0x5e, i8 u0x45, i8 u0x8d, i8 u0x4e, i8 u0x18, i8 u0x0f, i8 u0x02, i8 u0x86, i8 u0x72, i8 u0x57 ], ; module_uuid: 0f4a36ce-74f9-455e-8d4e-180f02867257
+		[16 x i8] [ i8 u0xda, i8 u0x18, i8 u0xfd, i8 u0x34, i8 u0x06, i8 u0xb0, i8 u0x77, i8 u0x4a, i8 u0xad, i8 u0x5c, i8 u0x9e, i8 u0xaa, i8 u0x5c, i8 u0x10, i8 u0xeb, i8 u0x8f ], ; module_uuid: 34fd18da-b006-4a77-ad5c-9eaa5c10eb8f
 		i32 2, ; uint32_t entry_count
 		i32 0, ; uint32_t duplicate_count
 		ptr @module26_managed_to_java, ; TypeMapModuleEntry* map

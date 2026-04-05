@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ghost.Mobile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+da72785a74116b65b5bfb175b027af6c0a68340f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ghost.Mobile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ghost.Mobile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

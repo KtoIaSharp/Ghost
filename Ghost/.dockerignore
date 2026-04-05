@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/wwwroot/admin/
+*.db
+*.user
+*.suo
+.vs/
+.idea/

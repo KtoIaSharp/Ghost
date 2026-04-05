@@ -38,16 +38,33 @@ public partial class LoginViewModel : ObservableObject
             else
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Ошибка",
-                    "Не удалось войти. Проверьте кодовую фразу и URL сервера в настройках.",
+                    "Ошибка входа",
+                    "Не удалось войти. Возможные причины:\n\n" +
+                    "• Сервер не запущен\n" +
+                    "• Неверная кодовая фраза\n" +
+                    "• Проблемы с сетью\n\n" +
+                    $"Текущий URL: {_settings.ServerUrl}\n\n" +
+                    "Проверьте что сервер запущен и URL правильный.",
                     "OK");
             }
         }
         catch (Exception ex)
         {
+            var errorMsg = ex.Message;
+            if (errorMsg.Contains("Connection refused") || errorMsg.Contains("Failed to connect"))
+            {
+                errorMsg = $"Не удалось подключиться к серверу!\n\n" +
+                          $"URL: {_settings.ServerUrl}\n\n" +
+                          "Проверьте:\n" +
+                          "• Бэкенд запущен (dotnet run)\n" +
+                          "• URL в настройках правильный\n" +
+                          "• Для эмулятора: http://10.0.2.2:5274\n" +
+                          "• Для устройства: http://ВАШ_IP:5274";
+            }
+            
             await Application.Current.MainPage.DisplayAlert(
                 "Ошибка подключения",
-                $"Не удалось подключиться к серверу:\n{ex.Message}\n\nПроверьте что сервер запущен и URL в настройках правильный.",
+                errorMsg,
                 "OK");
         }
     }
