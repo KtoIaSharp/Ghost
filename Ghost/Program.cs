@@ -8,6 +8,34 @@ using Ghost.Middleware;
 using System.Text;
 using System.IO;
 
+// Helper: конвертирует postgres:// URL в формат Npgsql
+string? ConvertPostgresUrlToConnectionString(string? postgresUrl)
+{
+    if (string.IsNullOrEmpty(postgresUrl)) return null;
+    
+    // Если уже в формате "Host=..." — возвращаем как есть
+    if (postgresUrl.StartsWith("Host=", StringComparison.OrdinalIgnoreCase))
+        return postgresUrl;
+    
+    // Формат: postgres://user:password@host:port/dbname
+    try
+    {
+        var uri = new Uri(postgresUrl);
+        var userInfo = uri.UserInfo.Split(':');
+        var user = userInfo[0];
+        var password = userInfo.Length > 1 ? userInfo[1] : "";
+        var host = uri.Host;
+        var port = uri.IsDefaultPort ? 5432 : uri.Port;
+        var dbName = uri.LocalPath.TrimStart('/');
+        
+        return $"Host={host};Port={port};Database={dbName};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
+    }
+    catch
+    {
+        return null;
+    }
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Конфигурация — единый fallback ключ
@@ -53,16 +81,19 @@ var dbProvider = builder.Configuration["Db:Provider"] ?? "sqlite";
 if (dbProvider == "postgres")
 {
     // Пробуем несколько способов получения строки подключения
-    var connStr = builder.Configuration.GetConnectionString("Postgres");
+    var rawConnStr = builder.Configuration.GetConnectionString("Postgres");
     
-    if (string.IsNullOrEmpty(connStr))
-        connStr = Environment.GetEnvironmentVariable("DB_PostgresConnection");
+    if (string.IsNullOrEmpty(rawConnStr))
+        rawConnStr = Environment.GetEnvironmentVariable("DB_PostgresConnection");
     
-    if (string.IsNullOrEmpty(connStr))
-        connStr = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (string.IsNullOrEmpty(rawConnStr))
+        rawConnStr = Environment.GetEnvironmentVariable("DATABASE_URL");
     
-    if (string.IsNullOrEmpty(connStr))
-        connStr = builder.Configuration["DB_PostgresConnection"];
+    if (string.IsNullOrEmpty(rawConnStr))
+        rawConnStr = builder.Configuration["DB_PostgresConnection"];
+
+    // Конвертируем postgres:// URL в формат Npgsql
+    var connStr = ConvertPostgresUrlToConnectionString(rawConnStr);
 
     if (string.IsNullOrEmpty(connStr))
     {
@@ -76,7 +107,7 @@ if (dbProvider == "postgres")
     {
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connStr));
-        Console.WriteLine("📦 База данных: PostgreSQL");
+        Console.WriteLine($"📦 База данных: PostgreSQL ({connStr.Split(';')[0]})");
     }
 }
 else
