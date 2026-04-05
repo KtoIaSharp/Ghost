@@ -15,15 +15,5 @@ services:
         value: Ghost
       - key: Jwt__Audience
         value: GhostUsers
-      - key: Jwt__Key
-        generateValue: true
-      - key: Admin__SecretPhrase
-        sync: false
     healthCheckPath: /api/Tasks
     autoDeploy: true
-
-databases:
-  - name: ghost-db
-    databaseName: ghost
-    plan: free
-    ipAllowList: []

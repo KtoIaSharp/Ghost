@@ -52,18 +52,32 @@ var dbProvider = builder.Configuration["Db:Provider"] ?? "sqlite";
 
 if (dbProvider == "postgres")
 {
-    var connStr = builder.Configuration.GetConnectionString("Postgres")
-                  ?? Environment.GetEnvironmentVariable("DATABASE_URL");
-                     
+    // Пробуем несколько способов получения строки подключения
+    var connStr = builder.Configuration.GetConnectionString("Postgres");
+    
+    if (string.IsNullOrEmpty(connStr))
+        connStr = Environment.GetEnvironmentVariable("DB_PostgresConnection");
+    
+    if (string.IsNullOrEmpty(connStr))
+        connStr = Environment.GetEnvironmentVariable("DATABASE_URL");
+    
+    if (string.IsNullOrEmpty(connStr))
+        connStr = builder.Configuration["DB_PostgresConnection"];
+
     if (string.IsNullOrEmpty(connStr))
     {
-        throw new Exception("DATABASE_URL не настроен для PostgreSQL");
+        // Fallback на SQLite если PostgreSQL недоступен
+        Console.WriteLine("⚠️ DATABASE_URL не найден, используем SQLite!");
+        dbProvider = "sqlite";
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
     }
-    
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(connStr));
-    
-    Console.WriteLine("📦 База данных: PostgreSQL");
+    else
+    {
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(connStr));
+        Console.WriteLine("📦 База данных: PostgreSQL");
+    }
 }
 else
 {
