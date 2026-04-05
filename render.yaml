@@ -4,27 +4,16 @@ services:
     env: docker
     dockerfilePath: ./Ghost/Dockerfile
     dockerContext: ./Ghost
-    region: frankfurt  # Ближайший к России
+    region: frankfurt
     plan: free
     envVars:
       - key: Db__Provider
         value: postgres
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-      - key: Jwt__Key
-        generateValue: true
-        sync: false
       - key: Jwt__Issuer
         value: Ghost
       - key: Jwt__Audience
         value: GhostUsers
-      - key: Admin__SecretPhrase
-        sync: false
     healthCheckPath: /api/Tasks
     autoDeploy: true
-
-databases:
-  - name: ghost-db
-    databaseName: ghost
-    plan: free
-    ipAllowList: []  # Разрешить всем
