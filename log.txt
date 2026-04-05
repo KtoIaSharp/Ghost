@@ -1,153 +1,155 @@
-2026-04-05T20:27:40.175027252Z ==> Downloading cache...
-2026-04-05T20:27:40.2747192Z ==> Cloning from https://github.com/KtoIaSharp/Ghost
-2026-04-05T20:28:03.378179843Z ==> Checking out commit f30aaaa0689fe68441cb6a1fd3ae21b74d61e125 in branch master
-2026-04-05T20:28:05.129371552Z ==> Downloaded 645MB in 3s. Extraction took 0s.
-2026-04-05T20:28:22.712794355Z #1 [internal] load build definition from Dockerfile
-2026-04-05T20:28:22.712847017Z #1 transferring dockerfile: 598B done
-2026-04-05T20:28:22.712850997Z #1 DONE 0.0s
-2026-04-05T20:28:22.712853677Z 
-2026-04-05T20:28:22.712857287Z #2 [internal] load metadata for mcr.microsoft.com/dotnet/aspnet:8.0
-2026-04-05T20:28:22.833284804Z #2 DONE 0.3s
-2026-04-05T20:28:22.833302774Z 
-2026-04-05T20:28:22.833325865Z #3 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0
-2026-04-05T20:28:22.934714359Z #3 DONE 0.3s
-2026-04-05T20:28:22.93473945Z 
-2026-04-05T20:28:22.93474759Z #4 [internal] load .dockerignore
-2026-04-05T20:28:22.93475087Z #4 transferring context: 104B done
-2026-04-05T20:28:22.93475332Z #4 DONE 0.0s
-2026-04-05T20:28:22.93475525Z 
-2026-04-05T20:28:22.9347579Z #5 importing cache manifest from local:1112177743492126182
-2026-04-05T20:28:22.93476097Z #5 inferred cache manifest type: application/vnd.oci.image.manifest.v1+json done
-2026-04-05T20:28:22.93476306Z #5 DONE 0.0s
-2026-04-05T20:28:22.934764991Z 
-2026-04-05T20:28:22.934767811Z #6 [build 1/6] FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:a9330090b730c2abde8f3f43b3d1e24e4b8cba028de7bab1a7fdcd50cb7a3b7e
-2026-04-05T20:28:22.93477116Z #6 resolve mcr.microsoft.com/dotnet/sdk:8.0@sha256:a9330090b730c2abde8f3f43b3d1e24e4b8cba028de7bab1a7fdcd50cb7a3b7e 0.0s done
-2026-04-05T20:28:22.934773341Z #6 DONE 0.0s
-2026-04-05T20:28:22.934775291Z 
-2026-04-05T20:28:22.934778231Z #7 [runtime 1/3] FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:d4d80bf500f4c8307e5c44bf61eb58aec027da07c4d1c40816846fe5eef3f34d
-2026-04-05T20:28:22.934781621Z #7 resolve mcr.microsoft.com/dotnet/aspnet:8.0@sha256:d4d80bf500f4c8307e5c44bf61eb58aec027da07c4d1c40816846fe5eef3f34d 0.0s done
-2026-04-05T20:28:22.934784991Z #7 DONE 0.0s
-2026-04-05T20:28:22.934787981Z 
-2026-04-05T20:28:22.934791101Z #8 [internal] load build context
-2026-04-05T20:28:23.126968218Z #8 transferring context: 133.47kB 0.0s done
-2026-04-05T20:28:23.126997469Z #8 DONE 0.0s
-2026-04-05T20:28:23.127001239Z 
-2026-04-05T20:28:23.127004479Z #9 [build 2/6] WORKDIR /src
-2026-04-05T20:28:23.127007339Z #9 CACHED
-2026-04-05T20:28:23.127009819Z 
-2026-04-05T20:28:23.12701243Z #10 [build 3/6] COPY *.csproj ./
-2026-04-05T20:28:23.12701533Z #10 CACHED
-2026-04-05T20:28:23.12701792Z 
-2026-04-05T20:28:23.12702045Z #11 [build 4/6] RUN dotnet restore
-2026-04-05T20:28:23.141266871Z #11 sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 28.24MB / 28.24MB 0.2s
-2026-04-05T20:28:23.325228333Z #11 sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 28.24MB / 28.24MB 0.2s done
-2026-04-05T20:28:23.325249383Z #11 extracting sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e
-2026-04-05T20:28:24.530332826Z #11 extracting sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 1.4s done
-2026-04-05T20:28:25.938432393Z #11 sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78 18.74MB / 18.74MB 0.2s
-2026-04-05T20:28:26.371029372Z #11 sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78 18.74MB / 18.74MB 0.4s done
-2026-04-05T20:28:26.608062311Z #11 extracting sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78
-2026-04-05T20:28:36.344709694Z #11 extracting sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78 9.9s done
-2026-04-05T20:28:37.370708458Z #11 sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb 3.29kB / 3.29kB done
-2026-04-05T20:28:37.55942954Z #11 extracting sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb
-2026-04-05T20:28:37.899256842Z #11 extracting sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb 0.5s done
-2026-04-05T20:28:38.083870152Z #11 sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 31.57MB / 32.25MB 0.2s
-2026-04-05T20:28:38.594277548Z #11 sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 32.25MB / 32.25MB 0.5s done
-2026-04-05T20:28:38.594311909Z #11 extracting sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8
-2026-04-05T20:28:39.583565154Z #11 extracting sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 1.1s done
-2026-04-05T20:28:39.691170999Z #11 sha256:cc471c325bf87bbcee9dfcc97d067a9a09fbd4ecb15aef95ebc96bbcffced994 152B / 152B done
-2026-04-05T20:28:39.69119087Z #11 extracting sha256:cc471c325bf87bbcee9dfcc97d067a9a09fbd4ecb15aef95ebc96bbcffced994 0.0s done
-2026-04-05T20:28:39.919140429Z #11 sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27 11.09MB / 11.09MB 0.1s done
-2026-04-05T20:28:39.91916653Z #11 extracting sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27
-2026-04-05T20:28:49.501134294Z #11 extracting sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27 9.7s done
-2026-04-05T20:28:49.684572692Z #11 sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 30.89MB / 30.89MB 0.2s
-2026-04-05T20:28:49.894669071Z #11 sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 30.89MB / 30.89MB 0.2s done
-2026-04-05T20:28:49.894689532Z #11 extracting sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835
-2026-04-05T20:28:50.900855051Z #11 extracting sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 1.2s done
-2026-04-05T20:28:51.085964124Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 30.41MB / 178.33MB 0.2s
-2026-04-05T20:28:51.236263262Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 67.11MB / 178.33MB 0.3s
-2026-04-05T20:28:51.386438446Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 97.52MB / 178.33MB 0.5s
-2026-04-05T20:28:51.535804827Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 132.27MB / 178.33MB 0.6s
-2026-04-05T20:28:51.685664173Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 164.63MB / 178.33MB 0.8s
-2026-04-05T20:28:51.836129764Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 178.33MB / 178.33MB 0.9s
-2026-04-05T20:28:52.402864917Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 178.33MB / 178.33MB 1.5s done
-2026-04-05T20:28:52.557774951Z #11 extracting sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4
-2026-04-05T20:29:05.590245949Z #11 extracting sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 13.2s done
-2026-04-05T20:29:05.701323149Z #11 sha256:61a861fa65a938e56f7f21db6417b7a31285709057a8f408dd774b98f79935f1 2.62kB / 2.62kB done
-2026-04-05T20:29:05.7013467Z #11 extracting sha256:61a861fa65a938e56f7f21db6417b7a31285709057a8f408dd774b98f79935f1 0.1s done
-2026-04-05T20:29:05.830436404Z #11 sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b 16.95MB / 16.95MB 0.1s done
-2026-04-05T20:29:05.984845534Z #11 extracting sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b
-2026-04-05T20:29:06.282876959Z #11 extracting sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b 0.4s done
-2026-04-05T20:29:06.447868989Z #11 sha256:b5b3540dc8d2d9ad980baa9752179924123545eb28a4dabfc030f3974658715e 92B / 92B done
-2026-04-05T20:29:06.44788883Z #11 extracting sha256:b5b3540dc8d2d9ad980baa9752179924123545eb28a4dabfc030f3974658715e 0.0s done
-2026-04-05T20:29:06.4478929Z #11 sha256:d2f804d0003fad2284137c85bdd8804a2228ef08041c81e761a9d948ceb8e600 476B / 476B done
-2026-04-05T20:29:06.44791163Z #11 extracting sha256:d2f804d0003fad2284137c85bdd8804a2228ef08041c81e761a9d948ceb8e600 0.1s done
-2026-04-05T20:29:06.6281625Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 33.88MB / 209.41MB 0.2s
-2026-04-05T20:29:06.777588104Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 65.01MB / 209.41MB 0.3s
-2026-04-05T20:29:06.927243843Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 100.66MB / 209.41MB 0.5s
-2026-04-05T20:29:07.08369708Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 130.56MB / 209.41MB 0.6s
-2026-04-05T20:29:07.227530019Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 166.72MB / 209.41MB 0.8s
-2026-04-05T20:29:07.377164708Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 199.23MB / 209.41MB 0.9s
-2026-04-05T20:29:09.528687349Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 209.41MB / 209.41MB 2.9s done
-2026-04-05T20:29:09.52870715Z #11 extracting sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9
-2026-04-05T20:29:17.151662691Z #11 extracting sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 7.6s done
-2026-04-05T20:29:17.394692784Z #11 CACHED
-2026-04-05T20:29:17.394712465Z 
-2026-04-05T20:29:17.394718005Z #12 [build 5/6] COPY . .
-2026-04-05T20:29:18.448607795Z #12 DONE 1.2s
-2026-04-05T20:29:18.601484564Z 
-2026-04-05T20:29:18.601507044Z #13 [build 6/6] RUN dotnet publish -c Release -o /app/publish --no-restore
-2026-04-05T20:29:26.593883789Z #13 8.143   Ghost -> /src/bin/Release/net8.0/Ghost.dll
-2026-04-05T20:29:27.781950764Z #13 9.331   Ghost -> /app/publish/
-2026-04-05T20:29:28.011143388Z #13 DONE 9.6s
-2026-04-05T20:29:28.147227125Z 
-2026-04-05T20:29:28.187882691Z #14 [runtime 2/3] WORKDIR /app
-2026-04-05T20:29:29.348946365Z #14 sha256:88fc5de76763e649e3ea8a3ba8204161ff5ea402cf3c421a3c35627a89246777 92B / 92B 0.0s done
-2026-04-05T20:29:29.348962375Z #14 extracting sha256:88fc5de76763e649e3ea8a3ba8204161ff5ea402cf3c421a3c35627a89246777
-2026-04-05T20:29:33.770808932Z #14 extracting sha256:88fc5de76763e649e3ea8a3ba8204161ff5ea402cf3c421a3c35627a89246777 4.4s done
-2026-04-05T20:29:33.92769474Z #14 CACHED
-2026-04-05T20:29:33.927716631Z 
-2026-04-05T20:29:33.927721571Z #15 [runtime 3/3] COPY --from=build /app/publish .
-2026-04-05T20:29:35.388652609Z #15 DONE 1.6s
-2026-04-05T20:29:35.543889842Z 
-2026-04-05T20:29:35.543921213Z #16 exporting to docker image format
-2026-04-05T20:29:35.543925443Z #16 exporting layers
-2026-04-05T20:29:37.501920741Z #16 exporting layers 2.1s done
-2026-04-05T20:29:37.671049405Z #16 exporting manifest sha256:09f94f9f1dc31a6a6a9ae4269b455bf77894fb95493d3776a8af6c9fd5c4d9ad done
-2026-04-05T20:29:37.671071515Z #16 exporting config sha256:aa97f9e9928394a0f92649d8b48dd3aa1170b707a39d137a441fab846f76eb78 done
-2026-04-05T20:29:38.179580789Z #16 DONE 2.8s
-2026-04-05T20:29:38.17960099Z 
-2026-04-05T20:29:38.17960626Z #17 exporting cache to client directory
-2026-04-05T20:29:38.17960986Z #17 preparing build cache for export
-2026-04-05T20:29:42.926004109Z #17 writing cache image manifest sha256:5f281bcb6ca1197ec5847876f1d7e5320c115ac9ebb3524e23802583d0e47a76 done
-2026-04-05T20:29:42.926027219Z #17 DONE 4.7s
-2026-04-05T20:30:10.855496062Z Pushing image to registry...
-2026-04-05T20:30:13.363405791Z Upload succeeded
-2026-04-05T20:30:20.244969209Z ==> Deploying...
-2026-04-05T20:30:20.43382762Z ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
-2026-04-05T20:30:26.899987438Z 🔄 Применяем миграции PostgreSQL...
-2026-04-05T20:30:32.501886288Z Unhandled exception. Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
-2026-04-05T20:30:32.501911049Z  ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
-2026-04-05T20:30:32.501915169Z    at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|54_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
-2026-04-05T20:30:32.501918918Z    at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|54_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
-2026-04-05T20:30:32.501922349Z    at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
-2026-04-05T20:30:32.501925129Z    at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
-2026-04-05T20:30:32.501927909Z    at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
-2026-04-05T20:30:32.501930369Z    at Npgsql.Internal.NpgsqlConnector.Authenticate(String username, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501933429Z    at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
-2026-04-05T20:30:32.501936609Z    at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501939039Z    at Npgsql.UnpooledDataSource.Get(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501941959Z    at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501944709Z    at Npgsql.NpgsqlConnection.Open()
-2026-04-05T20:30:32.501947149Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
-2026-04-05T20:30:32.501949529Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
-2026-04-05T20:30:32.501952099Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
-2026-04-05T20:30:32.501954479Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501956969Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
-2026-04-05T20:30:32.501959239Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists()
-2026-04-05T20:30:32.501962239Z    at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.Exists()
-2026-04-05T20:30:32.501964619Z    at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.GetAppliedMigrations()
-2026-04-05T20:30:32.501966929Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.Migrate(String targetMigration)
-2026-04-05T20:30:32.50196933Z    at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate(DatabaseFacade databaseFacade)
-2026-04-05T20:30:32.501972039Z    at Program.<Main>$(String[] args) in /src/Program.cs:line 177
-2026-04-05T20:30:35.151828793Z ==> Exited with status 139
-2026-04-05T20:30:35.153831244Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2026-04-05T20:41:27.463039189Z ==> Downloading cache...
+2026-04-05T20:41:27.512290271Z ==> Cloning from https://github.com/KtoIaSharp/Ghost
+2026-04-05T20:41:39.832116673Z ==> Checking out commit ff1b079e5403932fc01d8a8cf9626c13d268d7a3 in branch master
+2026-04-05T20:41:42.016061105Z ==> Downloaded 716MB in 4s. Extraction took 1s.
+2026-04-05T20:41:59.716652301Z #1 [internal] load build definition from Dockerfile
+2026-04-05T20:41:59.716690174Z #1 transferring dockerfile: 598B done
+2026-04-05T20:41:59.716692944Z #1 DONE 0.1s
+2026-04-05T20:41:59.716694984Z 
+2026-04-05T20:41:59.716697034Z #2 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0
+2026-04-05T20:41:59.87294758Z #2 ...
+2026-04-05T20:41:59.872962611Z 
+2026-04-05T20:41:59.872965841Z #3 [internal] load metadata for mcr.microsoft.com/dotnet/aspnet:8.0
+2026-04-05T20:41:59.872968121Z #3 DONE 0.3s
+2026-04-05T20:41:59.977442426Z 
+2026-04-05T20:41:59.977477468Z #2 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0
+2026-04-05T20:41:59.977480299Z #2 DONE 0.3s
+2026-04-05T20:41:59.977482368Z 
+2026-04-05T20:41:59.977487849Z #4 [internal] load .dockerignore
+2026-04-05T20:41:59.977490509Z #4 transferring context: 104B done
+2026-04-05T20:41:59.977492509Z #4 DONE 0.0s
+2026-04-05T20:41:59.977494329Z 
+2026-04-05T20:41:59.97749628Z #5 importing cache manifest from local:6310420054533879832
+2026-04-05T20:41:59.97749896Z #5 inferred cache manifest type: application/vnd.oci.image.manifest.v1+json done
+2026-04-05T20:41:59.9775009Z #5 DONE 0.0s
+2026-04-05T20:41:59.97750275Z 
+2026-04-05T20:41:59.97750526Z #6 [runtime 1/3] FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:d4d80bf500f4c8307e5c44bf61eb58aec027da07c4d1c40816846fe5eef3f34d
+2026-04-05T20:41:59.97750921Z #6 resolve mcr.microsoft.com/dotnet/aspnet:8.0@sha256:d4d80bf500f4c8307e5c44bf61eb58aec027da07c4d1c40816846fe5eef3f34d 0.0s done
+2026-04-05T20:41:59.977511341Z #6 DONE 0.0s
+2026-04-05T20:41:59.977513211Z 
+2026-04-05T20:41:59.977515171Z #7 [build 1/6] FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:a9330090b730c2abde8f3f43b3d1e24e4b8cba028de7bab1a7fdcd50cb7a3b7e
+2026-04-05T20:41:59.977517181Z #7 resolve mcr.microsoft.com/dotnet/sdk:8.0@sha256:a9330090b730c2abde8f3f43b3d1e24e4b8cba028de7bab1a7fdcd50cb7a3b7e 0.0s done
+2026-04-05T20:41:59.977519111Z #7 DONE 0.0s
+2026-04-05T20:41:59.977520911Z 
+2026-04-05T20:41:59.977522901Z #8 [internal] load build context
+2026-04-05T20:42:00.168841568Z #8 transferring context: 133.71kB done
+2026-04-05T20:42:00.1688615Z #8 DONE 0.0s
+2026-04-05T20:42:00.16886453Z 
+2026-04-05T20:42:00.16886802Z #9 [build 2/6] WORKDIR /src
+2026-04-05T20:42:00.16887078Z #9 CACHED
+2026-04-05T20:42:00.168873231Z 
+2026-04-05T20:42:00.168875971Z #10 [build 3/6] COPY *.csproj ./
+2026-04-05T20:42:00.168878711Z #10 CACHED
+2026-04-05T20:42:00.168881311Z 
+2026-04-05T20:42:00.168883851Z #11 [build 4/6] RUN dotnet restore
+2026-04-05T20:42:00.18527791Z #11 sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 28.24MB / 28.24MB 0.2s
+2026-04-05T20:42:00.387096001Z #11 sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 28.24MB / 28.24MB 0.2s done
+2026-04-05T20:42:00.387115223Z #11 extracting sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e
+2026-04-05T20:42:01.011572009Z #11 extracting sha256:6db0909c4473287ed4d1f950d26b8bc5b7b4206d365a0e7740cb89e46979153e 0.8s done
+2026-04-05T20:42:01.1592402Z #11 sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78 18.74MB / 18.74MB 0.1s done
+2026-04-05T20:42:01.314497379Z #11 extracting sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78
+2026-04-05T20:42:02.731988215Z #11 extracting sha256:8a4bd0e0a35d02b2c56f27f0fdd9a384dd93aa271f00f8ab007a85ab7911ea78 1.6s done
+2026-04-05T20:42:02.92998592Z #11 sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb 3.29kB / 3.29kB done
+2026-04-05T20:42:02.930001951Z #11 extracting sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb
+2026-04-05T20:42:04.23374488Z #11 extracting sha256:4f218a7f69dc742a56d551bce7e022a96d279448a43b383b6a2dcae2e89485eb 1.5s done
+2026-04-05T20:42:04.413924861Z #11 sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 32.25MB / 32.25MB 0.2s
+2026-04-05T20:42:04.635948306Z #11 sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 32.25MB / 32.25MB 0.2s done
+2026-04-05T20:42:04.635968397Z #11 extracting sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8
+2026-04-05T20:42:05.081149855Z #11 extracting sha256:f08927b81ba5ccf716dd8b726a9e79e59f141af47aa0842cd0b637f1d21bc8a8 0.6s done
+2026-04-05T20:42:05.200527289Z #11 sha256:cc471c325bf87bbcee9dfcc97d067a9a09fbd4ecb15aef95ebc96bbcffced994 152B / 152B done
+2026-04-05T20:42:05.20054835Z #11 extracting sha256:cc471c325bf87bbcee9dfcc97d067a9a09fbd4ecb15aef95ebc96bbcffced994 0.0s done
+2026-04-05T20:42:05.200553921Z #11 sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27 11.09MB / 11.09MB 0.1s done
+2026-04-05T20:42:05.355248322Z #11 extracting sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27
+2026-04-05T20:42:05.383981088Z #11 extracting sha256:3c6d3c066084b175dce93ba5776b5dd7f036edf2e404612d5fa93ccf116f0c27 0.2s done
+2026-04-05T20:42:05.549223027Z #11 sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 30.89MB / 30.89MB 0.2s
+2026-04-05T20:42:05.779131161Z #11 sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 30.89MB / 30.89MB 0.2s done
+2026-04-05T20:42:05.779148883Z #11 extracting sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835
+2026-04-05T20:42:06.525836855Z #11 extracting sha256:397ec0a74e3c9d52967bbf423d4547d854e86e14b2e0618b24c533952b9af835 0.9s done
+2026-04-05T20:42:06.688814202Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 36.70MB / 178.33MB 0.2s
+2026-04-05T20:42:06.838288913Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 69.21MB / 178.33MB 0.3s
+2026-04-05T20:42:07.012105657Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 106.95MB / 178.33MB 0.5s
+2026-04-05T20:42:07.1383413Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 136.31MB / 178.33MB 0.6s
+2026-04-05T20:42:07.288208998Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 176.16MB / 178.33MB 0.8s
+2026-04-05T20:42:07.840867402Z #11 sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 178.33MB / 178.33MB 1.3s done
+2026-04-05T20:42:07.994557326Z #11 extracting sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4
+2026-04-05T20:42:14.475412979Z #11 extracting sha256:296c556ba6accf654cd905729ba7038b8c212f7303dcde70a8bda36e3bdb9db4 6.6s done
+2026-04-05T20:42:14.580944364Z #11 sha256:61a861fa65a938e56f7f21db6417b7a31285709057a8f408dd774b98f79935f1 2.62kB / 2.62kB done
+2026-04-05T20:42:14.580963256Z #11 extracting sha256:61a861fa65a938e56f7f21db6417b7a31285709057a8f408dd774b98f79935f1 0.1s done
+2026-04-05T20:42:14.688299072Z #11 sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b 16.95MB / 16.95MB 0.1s done
+2026-04-05T20:42:14.843002345Z #11 extracting sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b
+2026-04-05T20:42:15.555496634Z #11 extracting sha256:b277f43e4782539ab503f8c4e4cc09f0fd2be948e8f9a9619353456428a0840b 0.9s done
+2026-04-05T20:42:15.686629346Z #11 sha256:b5b3540dc8d2d9ad980baa9752179924123545eb28a4dabfc030f3974658715e 92B / 92B done
+2026-04-05T20:42:15.686646077Z #11 extracting sha256:b5b3540dc8d2d9ad980baa9752179924123545eb28a4dabfc030f3974658715e 0.1s done
+2026-04-05T20:42:15.92502508Z #11 sha256:d2f804d0003fad2284137c85bdd8804a2228ef08041c81e761a9d948ceb8e600 476B / 476B done
+2026-04-05T20:42:15.925061432Z #11 extracting sha256:d2f804d0003fad2284137c85bdd8804a2228ef08041c81e761a9d948ceb8e600 0.1s done
+2026-04-05T20:42:15.930299063Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 33.55MB / 209.41MB 0.2s
+2026-04-05T20:42:16.080267148Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 70.25MB / 209.41MB 0.3s
+2026-04-05T20:42:16.230825222Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 101.71MB / 209.41MB 0.5s
+2026-04-05T20:42:16.380360108Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 137.36MB / 209.41MB 0.6s
+2026-04-05T20:42:16.530808195Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 167.77MB / 209.41MB 0.8s
+2026-04-05T20:42:16.680005068Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 205.59MB / 209.41MB 0.9s
+2026-04-05T20:42:17.397095076Z #11 sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 209.41MB / 209.41MB 1.6s done
+2026-04-05T20:42:17.55226399Z #11 extracting sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9
+2026-04-05T20:42:22.698013652Z #11 extracting sha256:f2623af22c6f8efb55ee50ab94821d8cdccf56944330535adc827ba9053809f9 5.3s done
+2026-04-05T20:42:22.824754879Z #11 CACHED
+2026-04-05T20:42:22.824791922Z 
+2026-04-05T20:42:22.824799652Z #12 [build 5/6] COPY . .
+2026-04-05T20:42:22.824803953Z #12 DONE 0.1s
+2026-04-05T20:42:22.976707407Z 
+2026-04-05T20:42:22.976735609Z #13 [build 6/6] RUN dotnet publish -c Release -o /app/publish --no-restore
+2026-04-05T20:42:28.155093548Z #13 5.329   Ghost -> /src/bin/Release/net8.0/Ghost.dll
+2026-04-05T20:42:28.36332547Z #13 5.537   Ghost -> /app/publish/
+2026-04-05T20:42:28.475963321Z #13 DONE 5.6s
+2026-04-05T20:42:28.475978202Z 
+2026-04-05T20:42:28.475982433Z #14 [runtime 2/3] WORKDIR /app
+2026-04-05T20:42:28.699744105Z #14 sha256:88fc5de76763e649e3ea8a3ba8204161ff5ea402cf3c421a3c35627a89246777 92B / 92B done
+2026-04-05T20:42:28.699766647Z #14 extracting sha256:88fc5de76763e649e3ea8a3ba8204161ff5ea402cf3c421a3c35627a89246777 0.0s done
+2026-04-05T20:42:28.699788718Z #14 CACHED
+2026-04-05T20:42:28.699792178Z 
+2026-04-05T20:42:28.699796129Z #15 [runtime 3/3] COPY --from=build /app/publish .
+2026-04-05T20:42:28.74546298Z #15 DONE 0.2s
+2026-04-05T20:42:28.898268356Z 
+2026-04-05T20:42:28.898292317Z #16 exporting to docker image format
+2026-04-05T20:42:28.898299138Z #16 exporting layers
+2026-04-05T20:42:30.803597241Z #16 exporting layers 2.1s done
+2026-04-05T20:42:31.012025025Z #16 exporting manifest sha256:75635e1df2f2853a8113ea82c6dff049b40feef15971cc50761d9a46453337f5 done
+2026-04-05T20:42:31.012054178Z #16 exporting config sha256:5b4887c160276759dfc59aad62474c9c3a743381ff21cb52d9d37a8f50868a01 done
+2026-04-05T20:42:31.534233588Z #16 DONE 2.8s
+2026-04-05T20:42:31.684627831Z 
+2026-04-05T20:42:31.684644142Z #17 exporting cache to client directory
+2026-04-05T20:42:31.684648873Z #17 preparing build cache for export
+2026-04-05T20:42:36.348472996Z #17 writing cache image manifest sha256:a6ece4fcd4e897fc5e8d1c2a57cac8e7ed0afe36250ae7e2739d99a942d98cac done
+2026-04-05T20:42:36.348493558Z #17 DONE 4.8s
+2026-04-05T20:42:37.677696336Z Pushing image to registry...
+2026-04-05T20:42:39.750066962Z Upload succeeded
+2026-04-05T20:42:43.281373505Z ==> Deploying...
+2026-04-05T20:42:43.484671747Z ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+2026-04-05T20:42:46.807373765Z 📦 База данных: PostgreSQL (Host=dpg-d79bmmp4tr6s73cqrp7g-a.oregon-postgres.render.com)
+2026-04-05T20:42:48.415708048Z 🔄 Применяем миграции PostgreSQL...
+2026-04-05T20:42:54.720651702Z Unhandled exception. Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
+2026-04-05T20:42:54.720672763Z  ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+2026-04-05T20:42:54.720678813Z    at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|54_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+2026-04-05T20:42:54.720684083Z    at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|54_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+2026-04-05T20:42:54.720700914Z    at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+2026-04-05T20:42:54.720705904Z    at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+2026-04-05T20:42:54.720710604Z    at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+2026-04-05T20:42:54.720715334Z    at Npgsql.Internal.NpgsqlConnector.Authenticate(String username, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720720354Z    at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+2026-04-05T20:42:54.720725644Z    at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720730154Z    at Npgsql.UnpooledDataSource.Get(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720735054Z    at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720794046Z    at Npgsql.NpgsqlConnection.Open()
+2026-04-05T20:42:54.720798986Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+2026-04-05T20:42:54.720832537Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+2026-04-05T20:42:54.720840567Z    at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+2026-04-05T20:42:54.720845017Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720849448Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
+2026-04-05T20:42:54.720853997Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists()
+2026-04-05T20:42:54.720858768Z    at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.Exists()
+2026-04-05T20:42:54.720863128Z    at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.GetAppliedMigrations()
+2026-04-05T20:42:54.720867368Z    at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.Migrate(String targetMigration)
+2026-04-05T20:42:54.720872158Z    at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate(DatabaseFacade databaseFacade)
+2026-04-05T20:42:54.720876678Z    at Program.<Main>$(String[] args) in /src/Program.cs:line 181
+2026-04-05T20:42:56.775956021Z 📦 База данных: PostgreSQL (Host=dpg-d79bmmp4tr6s73cqrp7g-a.oregon-postgres.render.com)
+2026-04-05T20:42:57.285093861Z ==> Exited with status 139
+2026-04-05T20:42:57.287486718Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys

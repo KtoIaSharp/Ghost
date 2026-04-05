@@ -20,19 +20,46 @@ string? ConvertPostgresUrlToConnectionString(string? postgresUrl)
     // Render может давать postgresql:// — меняем на postgres://
     if (postgresUrl.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
         postgresUrl = "postgres://" + postgresUrl[13..];
+    else if (postgresUrl.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase))
+        postgresUrl = "postgres://" + postgresUrl[9..];
     
     // Формат: postgres://user:password@host:port/dbname
     try
     {
-        var uri = new Uri(postgresUrl);
-        var userInfo = uri.UserInfo.Split(':');
-        var user = userInfo[0];
-        var password = userInfo.Length > 1 ? userInfo[1] : "";
-        var host = uri.Host;
-        var port = uri.IsDefaultPort ? 5432 : uri.Port;
-        var dbName = uri.LocalPath.TrimStart('/');
+        // Убираем префикс
+        var withoutPrefix = postgresUrl["postgres://".Length..];
         
-        return $"Host={host};Port={port};Database={dbName};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
+        // Находим @ — всё до это user:pass
+        var atIdx = withoutPrefix.LastIndexOf('@');
+        if (atIdx < 0) return null;
+        
+        var userPass = withoutPrefix[..atIdx];
+        var rest = withoutPrefix[(atIdx + 1)..];
+        
+        // Находим первый : для разделения user/pass
+        var colonIdx = userPass.IndexOf(':');
+        if (colonIdx < 0) return null;
+        
+        var user = Uri.UnescapeDataString(userPass[..colonIdx]);
+        var password = Uri.UnescapeDataString(userPass[(colonIdx + 1)..]);
+        
+        // host:port/dbname
+        var slashIdx = rest.IndexOf('/');
+        if (slashIdx < 0) return null;
+        
+        var hostPort = rest[..slashIdx];
+        var dbName = rest[(slashIdx + 1)..];
+        
+        // Убираем query params из dbName
+        var qIdx = dbName.IndexOf('?');
+        if (qIdx >= 0) dbName = dbName[..qIdx];
+        
+        // host:port
+        var colonIdx2 = hostPort.LastIndexOf(':');
+        var host = hostPort[..colonIdx2];
+        var port = colonIdx2 >= 0 ? int.Parse(hostPort[(colonIdx2 + 1)..]) : 5432;
+        
+        return $"Host={host};Port={port};Database={dbName};Username={user};Password={password};SSL Mode=Prefer;Trust Server Certificate=true;";
     }
     catch
     {
