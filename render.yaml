@@ -1,12 +1,11 @@
 services:
   - type: web
     name: ghost-api
-    env: dotnet
-    rootDir: Ghost
+    env: docker
+    dockerfilePath: ./Ghost/Dockerfile
+    dockerContext: ./Ghost
     region: frankfurt
     plan: free
-    buildCommand: dotnet restore && dotnet publish -c Release -o /app/publish
-    startCommand: dotnet /app/publish/Ghost.dll
     envVars:
       - key: Db__Provider
         value: postgres
@@ -16,5 +15,15 @@ services:
         value: Ghost
       - key: Jwt__Audience
         value: GhostUsers
+      - key: Jwt__Key
+        generateValue: true
+      - key: Admin__SecretPhrase
+        sync: false
     healthCheckPath: /api/Tasks
     autoDeploy: true
+
+databases:
+  - name: ghost-db
+    databaseName: ghost
+    plan: free
+    ipAllowList: []
