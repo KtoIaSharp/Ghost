@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Ghost App Colors -->
+    <Color x:Key="Primary">#667eea</Color>
+    <Color x:Key="PrimaryDark">#5a6fd6</Color>
+    <Color x:Key="Secondary">#764ba2</Color>
+
+    <Color x:Key="Background">#0f0f23</Color>
+    <Color x:Key="CardBackground">#16213e</Color>
+    <Color x:Key="CardBorder">#1a1a3e</Color>
+
+    <Color x:Key="Success">#4ade80</Color>
+    <Color x:Key="Warning">#fbbf24</Color>
+    <Color x:Key="Error">#ff6b6b</Color>
+
+    <Color x:Key="TextPrimary">#ffffff</Color>
+    <Color x:Key="TextSecondary">#a0a0b0</Color>
+    <Color x:Key="TextMuted">#666680</Color>
+
+    <Color x:Key="ChatBubbleMine">#667eea</Color>
+    <Color x:Key="ChatBubbleOther">#1e293b</Color>
+</ResourceDictionary>

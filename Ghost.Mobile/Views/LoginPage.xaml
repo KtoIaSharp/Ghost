@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ghost.Mobile.Views.LoginPage"
+             BackgroundColor="#1a1a2e"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto,*" Padding="30">
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <Label Text="👻" FontSize="80" HorizontalOptions="Center"/>
+            <Label Text="Ghost" FontSize="36" FontAttributes="Bold" TextColor="#ffffff" HorizontalOptions="Center"/>
+            <Label Text="Анонимная биржа заданий" FontSize="16" TextColor="#a0a0b0" HorizontalOptions="Center" Margin="0,0,0,40"/>
+
+            <Label Text="Введите кодовую фразу:" TextColor="#a0a0b0" FontSize="14"/>
+
+            <Entry x:Name="PhraseEntry"
+                   Text="{Binding Phrase}"
+                   Placeholder="Ваша секретная фраза..."
+                   BackgroundColor="#16213e"
+                   TextColor="#ffffff"
+                   PlaceholderColor="#666680"
+                   HeightRequest="55"
+                   FontSize="18"
+                   ReturnCommand="{Binding LoginCommand}"/>
+
+            <Label x:Name="ErrorLabel"
+                   TextColor="#ff6b6b"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   IsVisible="False"/>
+
+            <Button x:Name="LoginButton"
+                    Text="Войти"
+                    Command="{Binding LoginCommand}"
+                    BackgroundColor="#667eea"
+                    TextColor="#ffffff"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    HeightRequest="55"
+                    CornerRadius="12"/>
+
+            <ActivityIndicator x:Name="LoadingIndicator"
+                               Color="#667eea"
+                               IsVisible="False"
+                               IsRunning="False"
+                               HeightRequest="40"/>
+
+            <Label Text="Если у вас нет аккаунта, он будет создан автоматически"
+                   TextColor="#666680"
+                   FontSize="12"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

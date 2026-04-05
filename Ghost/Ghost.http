@@ -1,0 +1,6 @@
+@Ghost_HostAddress = http://localhost:5274
+
+GET {{Ghost_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ghost.Mobile.Views.ProfilePage"
+             Title="Профиль"
+             BackgroundColor="#0f0f23">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Frame Padding="25" BackgroundColor="#16213e" BorderColor="#1a1a3e" CornerRadius="20" HasShadow="False">
+                <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+                    <Frame WidthRequest="80" HeightRequest="80" BackgroundColor="#667eea" BorderColor="Transparent" CornerRadius="40" HasShadow="False" HorizontalOptions="Center">
+                        <Label Text="👻" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label x:Name="NickLabel" Text="Гость" TextColor="#ffffff" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button x:Name="ServerUrlButton" Text="URL сервера" BackgroundColor="#1a1a2e" TextColor="#a0a0b0" FontSize="14" HeightRequest="45" CornerRadius="10"/>
+            <Label x:Name="ServerUrlLabel" TextColor="#666680" FontSize="12" HorizontalOptions="Center"/>
+
+            <Button Text="Выйти" Command="{Binding LogoutCommand}" BackgroundColor="#ff6b6b" TextColor="#ffffff" FontSize="16" HeightRequest="50" CornerRadius="12" Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

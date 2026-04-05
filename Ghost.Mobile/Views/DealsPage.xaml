@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ghost.Mobile.Views.DealsPage"
+             Title="Сделки"
+             BackgroundColor="#0f0f23">
+
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout Grid.Row="0" Padding="15,10" BackgroundColor="#16213e">
+            <Picker x:Name="FilterPicker"
+                    Title="Статус"
+                    TextColor="#ffffff"
+                    BackgroundColor="#1a1a2e"
+                    HeightRequest="45"/>
+        </VerticalStackLayout>
+
+        <RefreshView Grid.Row="1"
+                     x:Name="RefreshView"
+                     RefreshColor="#667eea">
+            <CollectionView x:Name="DealsCollection"
+                            SelectionMode="None"
+                            BackgroundColor="#0f0f23">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                        <Label Text="💼" FontSize="60" HorizontalOptions="Center"/>
+                        <Label Text="Сделок пока нет" TextColor="#666680" FontSize="18" HorizontalOptions="Center"/>
+                        <Label Text="Возьмите платное задание" TextColor="#666680" FontSize="14" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator x:Name="LoadingIndicator"
+                           Grid.Row="1"
+                           Color="#667eea"
+                           IsVisible="False"
+                           IsRunning="False"
+                           HeightRequest="50"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,262 @@
+# ДОКУМЕНТАЦИЯ ПРОЕКТА: Ghost
+# Анонимная биржа заданий для школы
+# Версия: 1.0
+# Дата начала: 5 апреля 2026
+
+---
+
+## ИСТОРИЯ ИЗМЕНЕНИЙ
+
+### 2026-04-05 — Исправление критичных багов и переименование
+
+#### 1. Переименование проекта
+- **Namespace**: `SchoolTaskBazaar` → `Ghost` (все файлы)
+- **Assembly/RootNamespace**: `Ghost` (Ghost.csproj)
+- **JWT Issuer/Audience**: `SchoolTaskBazaar`/`SchoolTaskBazaarUsers` → `Ghost`/`GhostUsers`
+- **База данных**: `schoolbazaar.db` → `ghost.db`
+- **Админка**: заголовок "SchoolTaskBazaar" → "Ghost"
+- **Миграции**: обновлены namespace в InitialCreate.Designer.cs и AppDbContextModelSnapshot.cs
+
+#### 2. CryptoCloudService.cs — исправлена заглушка
+- **Было**: `CheckPaymentStatusAsync()` всегда возвращал `true` (TODO)
+- **Стало**: Реальная проверка статуса через CryptoCloud API (`/invoice/info`)
+- **Fallback**: если API ключи не настроены — возвращает `true` (режим разработки)
+- **CreateInvoiceAsync**: если API ключи не настроены — возвращает демо-ссылку
+
+#### 3. CryptoCloudService.cs — thread-safety HttpClient
+- **Было**: `_httpClient.DefaultRequestHeaders.Clear()` и `.Add()` — не thread-safe
+- **Стало**: `HttpRequestMessage` с per-request headers
+
+#### 4. AdminActionRequest.cs — исправлен тип TargetId
+- **Было**: `int? TargetId` — не работало для бана (phraseHash — строка)
+- **Стало**: `int? TargetTaskId` (для удаления заданий) + `string? TargetPhraseHash` (для бана)
+
+#### 5. AdminController.cs — исправлен бан пользователей
+- **Было**: `request.TargetId?.ToString()` — конвертировало int в string
+- **Стало**: `request.TargetPhraseHash` — прямая передача phraseHash
+- **Добавлено**: endpoint `GET /api/Admin/complaints` — список ожидающих жалоб
+- **Добавлено**: endpoint `POST /api/Admin/resolve-complaint` — рассмотрение жалобы
+
+#### 6. Program.cs — зарегистрирован AdminAuthMiddleware
+- **Было**: Middleware существовал, но не был добавлен в pipeline
+- **Стало**: `app.UseMiddleware<AdminAuthMiddleware>()`
+- **JWT fallback**: единый ключ `"GhostSuperSecretKeyForJWT2024!LongEnough32Chars"`
+
+#### 7. AuthController.cs — исправлены JWT ключи и race condition
+- **Было**: fallback ключ `"supersecretkey"` (отличался от Program.cs)
+- **Стало**: exception если JWT ключ не настроен (без fallback)
+- **Race condition**: добавлена транзакция + атомарный `CountAsync()` для первого пользователя-админа
+
+#### 8. NicknameGenerator.cs — thread-safe Random
+- **Было**: `private static readonly Random _random = new()` — не thread-safe
+- **Стало**: `Random.Shared.Next(1000, 9999)` — thread-safe (.NET 6+)
+
+#### 9. Админ-панель (wwwroot/admin/index.html)
+- **Было**: `API_URL = 'http://localhost:5274'` — захардкожен
+- **Стало**: `window.location.origin` — автоопределение
+- **Добавлено**: `loadComplaints()` — загрузка и отображение жалоб
+- **Добавлено**: `resolveComplaint()` — кнопка рассмотрения жалобы
+- **Исправлено**: `banUser()` → `targetPhraseHash` вместо `targetId`
+- **Исправлено**: `deleteTask()` → `targetTaskId` вместо `targetId`
+- **Добавлено**: статистика deals и complaints (пока заглушка)
+
+---
+
+## АРХИТЕКТУРА ПРОЕКТА
+
+### Технологии
+- **Backend**: C# / ASP.NET Core 8.0
+- **База данных**: SQLite (локально), PostgreSQL (продакшен)
+- **Авторизация**: JWT токены (7 дней)
+- **Платежи**: CryptoCloud (USDT)
+- **Админка**: HTML/JS (wwwroot/admin/index.html)
+
+### Структура файлов
+```
+Ghost/
+├── Controllers/
+│   ├── AuthController.cs       # Вход/регистрация по фразе
+│   ├── TasksController.cs      # CRUD заданий
+│   ├── DealsController.cs      # Сделки (эскроу)
+│   ├── AdminController.cs      # Админ-панель API
+│   └── PollController.cs       # Опросы о монетизации
+├── Models/
+│   ├── User.cs                 # Пользователь
+│   ├── SchoolTask.cs           # Задание
+│   ├── Deal.cs                 # Сделка
+│   ├── Review.cs               # Отзыв
+│   ├── Complaint.cs            # Жалоба
+│   ├── Dispute.cs              # Спор
+│   ├── MonetizationPoll.cs     # Опрос монетизации
+│   └── PollVote.cs             # Голос
+├── DTOs/
+│   ├── LoginRequest.cs
+│   ├── CreateTaskRequest.cs
+│   ├── CreateDealRequest.cs
+│   ├── SubmitProofRequest.cs
+│   ├── AdminActionRequest.cs
+│   └── VoteRequest.cs
+├── Services/
+│   ├── HashService.cs          # SHA-256 хеширование фраз
+│   ├── NicknameGenerator.cs    # Генерация ников
+│   ├── CryptoCloudService.cs   # Платежи
+│   ├── AdminService.cs         # Админ-операции
+│   └── PollService.cs          # Опросы
+├── Data/
+│   └── AppDbContext.cs         # EF Core контекст
+├── Middleware/
+│   └── AdminAuthMiddleware.cs  # Проверка админ-прав
+├── Migrations/
+│   └── InitialCreate           # Начальная миграция
+├── wwwroot/admin/
+│   └── index.html              # Админ-панель
+├── Program.cs                  # Точка входа
+├── appsettings.json            # Конфигурация
+└── Ghost.csproj                # Проект
+```
+
+### API Эндпоинты
+
+#### Auth
+- `POST /api/Auth/login` — вход/регистрация (фраза → токен + ник + isAdmin)
+
+#### Tasks
+- `GET /api/Tasks` — список открытых заданий
+- `GET /api/Tasks/{id}` — одно задание
+- `POST /api/Tasks` — создать задание
+- `POST /api/Tasks/{id}/take` — взять в работу
+- `POST /api/Tasks/{id}/complete` — завершить
+
+#### Deals
+- `POST /api/Deals` — создать сделку (эскроу)
+- `POST /api/Deals/{id}/confirm` — подтвердить выполнение
+- `POST /api/Deals/{id}/dispute` — открыть спор
+- `GET /api/Deals/my` — мои сделки
+
+#### Admin (только isAdmin=true)
+- `GET /api/Admin/users` — все пользователи
+- `GET /api/Admin/tasks` — все задания
+- `GET /api/Admin/complaints` — ожидающие жалобы
+- `POST /api/Admin/ban` — забанить (targetPhraseHash)
+- `POST /api/Admin/delete-task` — удалить задание (targetTaskId)
+- `POST /api/Admin/resolve-complaint` — рассмотреть жалобу
+- `POST /api/Admin/start-poll` — запустить опрос
+- `POST /api/Admin/end-poll` — завершить опрос
+- `POST /api/Admin/enable-monetization` — включить комиссию 5%
+
+#### Poll
+- `GET /api/Poll/active` — активный опрос
+- `POST /api/Poll/{pollId}/vote` — проголосовать
+
+---
+
+## ИЗВЕСТНЫЕ ПРОБЛЕМЫ (не исправлены)
+
+### Средний приоритет
+- Нет ComplaintsController для создания жалоб (пользователями)
+- Нет ReviewsController — отзывы и рейтинг не работают
+- Нет endpoint для отправки proof (доказательства выполнения)
+- Auto-confirm сделок (AutoConfirmAt) — нет background service
+- CompleteTask обходит Deal для платных заданий
+- Нет защиты от дублей Deal для одного задания
+- Нет проверки executor != creator в TakeTask (бесплатные задания)
+
+### Низкий приоритет
+- Нет background job для очистки просроченных заданий
+- Dispute — нет endpoint для разрешения спора админом
+- User.Rating никогда не обновляется
+- Ghost.http ссылается на несуществующий /weatherforecast/
+
+---
+
+## СЛЕДУЮЩИЕ ПЛАНЫ
+1. ✅ Деплой на Render.com + переход на PostgreSQL (в процессе)
+2. ✅ Android APK (.NET MAUI) — проект создан, нужна установка Android SDK
+3. Приватный чат + отправка фото (бэкенд endpoint'ы)
+4. CryptoCloud webhook + реальные ключи
+5. Пуш-уведомления (FCM)
+6. Система отзывов и рейтингов
+
+---
+
+### 2026-04-05 — Создание Android APK проекта (Ghost.Mobile)
+
+#### Создан полноценный .NET MAUI проект
+
+**Структура проекта:**
+```
+Ghost.Mobile/
+├── Models/
+│   ├── User.cs              # Модель пользователя + LoginRequest/Response
+│   ├── SchoolTask.cs        # Модель задания + CreateTaskRequest/TaskResponse
+│   ├── Deal.cs              # Модель сделки + CreateDealRequest/DealResponse
+│   ├── ChatMessage.cs       # Сообщения чата + SendMessageRequest
+│   ├── Review.cs            # Отзывы + CreateReviewRequest
+│   └── Complaint.cs         # Жалобы + CreateComplaintRequest
+├── Services/
+│   ├── SettingsService.cs   # Хранение токена, ника, URL сервера (Preferences)
+│   ├── ApiService.cs        # HTTP клиент для всех API эндпоинтов
+│   └── AuthService.cs       # Авторизация + хеширование фраз
+├── ViewModels/
+│   ├── LoginViewModel.cs    # Вход по кодовой фразе
+│   ├── TasksViewModel.cs    # Лента заданий с фильтрами (категория, платные)
+│   ├── TaskDetailViewModel.cs # Детали задания + взять/завершить
+│   ├── CreateTaskViewModel.cs # Создание задания (название, описание, категория, оплата, срочность)
+│   ├── ChatViewModel.cs     # Приватный чат с polling (3 сек) + confirm/dispute
+│   ├── DealsViewModel.cs    # Мои сделки с фильтрацией по статусу
+│   └── ProfileViewModel.cs  # Профиль, рейтинг, опросы, настройки, выход
+├── Views/
+│   ├── LoginPage.xaml(.cs)       # Экран входа (кодовая фраза, авто-регистрация)
+│   ├── TasksPage.xaml(.cs)       # Лента заданий (RefreshView, CollectionView, фильтры)
+│   ├── TaskDetailPage.xaml(.cs)  # Детали задания + кнопки действий
+│   ├── CreateTaskPage.xaml(.cs)  # Форма создания задания
+│   ├── ChatPage.xaml(.cs)        # Приватный чат (пузырьки сообщений, polling)
+│   ├── DealsPage.xaml(.cs)       # Список сделок (фильтры, статусы)
+│   └── ProfilePage.xaml(.cs)     # Профиль + статистика + опросы + настройки
+├── Resources/
+│   ├── Styles/Colors.xaml   # Цветовая схема Ghost (#667eea, #0f0f23, #16213e)
+│   ├── Styles/Styles.xaml   # Глобальные стили
+│   ├── AppIcon/*.svg        # Иконка приложения (👻)
+│   └── Splash/splash.svg    # Splash screen
+├── Platforms/Android/
+│   ├── MainActivity.cs           # Точка входа Android
+│   ├── MainApplication.cs        # Инициализация MAUI
+│   ├── AndroidManifest.xml       # Разрешения (INTERNET, ACCESS_NETWORK_STATE)
+│   └── Resources/values/colors.xml
+├── App.xaml(.cs)            # Точка входа приложения
+├── AppShell.xaml(.cs)       # Навигация (TabBar: Задания/Сделки/Профиль)
+├── MauiProgram.cs           # DI регистрация сервисов и страниц
+└── Ghost.Mobile.csproj      # Проект (net9.0-android)
+```
+
+**Реализованные экраны:**
+1. **LoginPage** — ввод кодовой фразы, авто-регистрация, сохранение токена
+2. **TasksPage** — лента заданий с фильтрами (категория, только платные), pull-to-refresh, карточки с эмодзи категорий, статусов, наград
+3. **TaskDetailPage** — полное описание задания, информация, кнопки "Взять" / "Завершить"
+4. **CreateTaskPage** — форма: название, описание, категория, переключатель платности, сумма, срочность
+5. **ChatPage** — приватный чат с polling (каждые 3 сек), пузырьки сообщений, кнопки "Подтвердить" / "Спор" / "Оплатить"
+6. **DealsPage** — список сделок с фильтрацией по статусу, информация о сделке
+7. **ProfilePage** — профиль (ник, админ), статистика (выполнено, рейтинг), активный опрос (за/против), настройки URL сервера, выход
+
+**Навигация:**
+- TabBar: Задания → Сделки → Профиль
+- Push: TaskDetail, CreateTask, Chat
+- QueryProperty для передачи ID задания / DealId
+
+**Дизайн:**
+- Тёмная тема (#0f0f23 фон, #16213e карточки)
+- Акцентный цвет #667eea (фиолетовый)
+- Эмодзи для категорий и статусов
+- Адаптивные карточки с тегами
+
+**Сервисы:**
+- ApiService — полный HTTP клиент для всех эндпоинтов бэкенда
+- SettingsService — сохранение auth токена в Preferences
+- AuthService — обёртка для авторизации
+
+**Статус сборки:**
+- ✅ Код полностью написан
+- ✅ Android SDK установлен (API 36.1, build-tools 36.1.0)
+- ✅ APK успешно собран: `com.ghost.bazaar-Signed.apk` (7.3 MB)
+- ✅ APK скопирован: `C:\Users\user\Desktop\Ghost\APK\Ghost-v1.0.apk`
+- Команда сборки: `dotnet build -c Release -p:AcceptAndroidSDKLicenses=true`

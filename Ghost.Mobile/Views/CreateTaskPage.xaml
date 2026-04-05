@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ghost.Mobile.Views.CreateTaskPage"
+             Title="Новое задание"
+             BackgroundColor="#0f0f23">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Название" TextColor="#a0a0b0" FontSize="14"/>
+            <Entry x:Name="TitleEntry" Placeholder="Название задания..." BackgroundColor="#16213e" TextColor="#ffffff" HeightRequest="50"/>
+
+            <Label Text="Описание" TextColor="#a0a0b0" FontSize="14"/>
+            <Editor x:Name="DescEditor" Placeholder="Описание..." BackgroundColor="#16213e" TextColor="#ffffff" HeightRequest="120"/>
+
+            <Label Text="Категория" TextColor="#a0a0b0" FontSize="14"/>
+            <Picker x:Name="CategoryPicker" BackgroundColor="#16213e" TextColor="#ffffff" HeightRequest="50"/>
+
+            <HorizontalStackLayout Spacing="10">
+                <CheckBox x:Name="IsPaidCheck" Color="#667eea"/>
+                <Label Text="Платное" TextColor="#ffffff" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <Label Text="Награда (USDT)" TextColor="#a0a0b0" FontSize="14"/>
+            <Entry x:Name="RewardEntry" Placeholder="10" BackgroundColor="#16213e" TextColor="#ffffff" HeightRequest="50" Keyboard="Numeric"/>
+
+            <Button x:Name="CreateButton" Text="Создать" BackgroundColor="#667eea" TextColor="#ffffff" FontSize="18" HeightRequest="55" CornerRadius="12"/>
+            <ActivityIndicator x:Name="LoadingIndicator" Color="#667eea" IsVisible="False" IsRunning="False" HeightRequest="40"/>
+            <Label x:Name="StatusLabel" TextColor="#fbbf24" FontSize="14" HorizontalOptions="Center" IsVisible="False"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
