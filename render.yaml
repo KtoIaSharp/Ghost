@@ -1,11 +1,12 @@
 services:
   - type: web
     name: ghost-api
-    env: docker
-    dockerfilePath: ./Ghost/Dockerfile
-    dockerContext: ./Ghost
+    env: dotnet
+    rootDir: Ghost
     region: frankfurt
     plan: free
+    buildCommand: dotnet restore && dotnet publish -c Release -o /app/publish
+    startCommand: dotnet /app/publish/Ghost.dll
     envVars:
       - key: Db__Provider
         value: postgres
