@@ -52,9 +52,9 @@ var dbProvider = builder.Configuration["Db:Provider"] ?? "sqlite";
 
 if (dbProvider == "postgres")
 {
-    var connStr = builder.Configuration.GetConnectionString("Postgres") 
-                  ?? builder.Environment.GetEnvironmentVariable("DATABASE_URL");
-    
+    var connStr = builder.Configuration.GetConnectionString("Postgres")
+                  ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+                     
     if (string.IsNullOrEmpty(connStr))
     {
         throw new Exception("DATABASE_URL не настроен для PostgreSQL");
